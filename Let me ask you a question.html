@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Vuong Nguyen">
+        <title>hey </title>
+        <link href="style.css" rel="stylesheet" />
+        <style>
+            * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --footer-bg: #2e3033;
+}
+
+body {
+    background-color: #ffffff;
+    font-size: 16px;
+}
+
+#main {
+    background-color: #000000;
+    margin: 20px 40px;
+    min-height: 700px;
+    display: grid;
+    grid-template-columns: 1fr repeat(3, 3fr) 1fr;
+    grid-template-rows: 150px;
+    grid-auto-rows: 200px;
+    grid-template-areas: "question question question question question"
+                        ". . no3 . ."
+                        ". no1 yes no2 ."
+                        ". . no4 . .";
+}
+
+@media screen and (max-width: 900px) {
+    #main {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(180px, max-content);
+        grid-auto-rows: minmax(180px, max-content);
+        grid-template-areas: "question"
+                            "no1"
+                            "yes"
+                            "no2";
+    }
+
+    #divNo3, #divNo4 {
+        visibility: collapse;
+    }
+}
+
+#divQuestion {
+    grid-area: question;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 3px;
+    padding: 10px;
+    color: rgb(255, 0, 0);
+}
+
+#divQuestion h1 {
+    font-size: 2rem;
+}
+
+.divBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#divNo1 {
+    grid-area: no1;
+}
+
+#divYes {
+    grid-area: yes;
+}
+
+#divNo2 {
+    grid-area: no2;
+}
+
+#divNo3 {
+    grid-area: no3;
+}
+
+#divNo4 {
+    grid-area: no4;
+}
+
+footer {
+    background-color: var(--footer-bg);
+    color: #ff0000;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    font-size: 1.2rem;
+    min-width: 60px;
+    min-height: 40px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--footer-bg);
+    color: #fff;
+}
+        </style>
+
+        
+    </head>
+    <body>
+        <main id="main">
+            <section id="divQuestion">
+                <h1>Hey, are you crazy????</h1>
+            </section>
+            <section id="divNo3" class="divBtn"></section>
+            <section id="divNo1" class="divBtn">
+                <button id="btnNo">NO</button>
+            </section>
+            <section id="divYes" class="divBtn">
+                <button id="btnYes">YES</button>
+            </section>
+            <section id="divNo2" class="divBtn"></section>
+            <section id="divNo4" class="divBtn"></section>
+        </main>
+        <footer>
+            <h3>Created By Bill  &copy; 2023</h3>
+        </footer>
+
+        <script>
+            let posbtnNo = 1;
+            const btnNo = document.querySelector("#btnNo");
+            const divNo1 = document.querySelector("#divNo1");
+            const divNo2 = document.querySelector("#divNo2");
+            const divNo3 = document.querySelector("#divNo3");
+            const divNo4 = document.querySelector("#divNo4");
+
+            const randomInteger = (min, max) => { // min and max included 
+                return Math.floor(Math.random() * (max - min + 1) + min);
+            }
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth <= 900) {
+                    switch (posbtnNo) {
+                        case 3:
+                            posbtnNo = 1;
+                            divNo1.appendChild(btnNo);
+                            break;
+                        case 4:
+                            posbtnNo = 2;
+                            divNo2.appendChild(btnNo);
+                            break;
+                    }
+                }
+            });
+
+            btnNo.addEventListener('mouseover', evt => {
+                if (window.innerWidth > 900) {
+                    switch (posbtnNo) {
+                        case 1:
+                        case 2:
+                            posbtnNo = randomInteger(3, 4);
+                            break;
+                        case 3:
+                        case 4:
+                            posbtnNo = randomInteger(1, 2);
+                            break;
+                    }
+
+                    switch (posbtnNo) {
+                        case 1:
+                            divNo1.appendChild(btnNo);
+                            break;
+                        case 2:
+                            divNo2.appendChild(btnNo);
+                            break;
+                        case 3:
+                            divNo3.appendChild(btnNo);
+                            break;
+                        case 4:
+                            divNo4.appendChild(btnNo);
+                            break;
+                    }
+                } else { // window innerWidth <= 900
+                    switch (posbtnNo) {
+                        case 1:
+                            posbtnNo = 2;
+                            divNo2.appendChild(btnNo);
+                            break;
+                        case 2:
+                            posbtnNo = 1;
+                            divNo1.appendChild(btnNo);
+                            break;
+                    }
+                }
+            });
+
+            btnYes.addEventListener('click', () => {
+                alert("Thank you! for saying yes, finally we sure now ^__^")
+            })
+        </script>
+    </body>
+</html>
+
